@@ -28,6 +28,7 @@ function convert_sass(filename) {
 
 app.get('/*.css', function(req, res) {
     var url= req.url.split('/').reverse();
+    console.log(url);
     if (url[1] == 'css') {
 	var filename= res.req.params[0].split('/')[1];
 	// var css= convert_sass(__dirname+'/views/'+filename + '.css.sass');
@@ -47,6 +48,14 @@ app.get('/images/*', function(req, res){
 
 app.get('/', function(req, res){
     res.render('index.jade', {
+	locals: {
+	    title: "OntoIM"
+	}
+    });
+});
+
+app.get('/chatty', function(req, res){
+    res.render('chatty.jade', {
 	locals: {
 	    title: "OntoIM"
 	}
