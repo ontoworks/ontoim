@@ -9,17 +9,17 @@ a
     :height 650px
     :width 290px
     .status-wrapper
-      :height 100px
-      :width 290px
+      :height 78px
+      :width 265px
       :float left
       span.left
         :height 78px
-        :width 22px
+        :width 17px
         :float left
-        :background url(/images/sprite-1.png) no-repeat -10px -9px
+        :background url(/images/sprite-1.png) no-repeat -12px -9px
       #status-box
         :height 78px
-        :width 230px
+        :width 233px
         :float left
         :background url(/images/status-wrapper-background.png) repeat 0 0
         .status-icon
@@ -61,6 +61,71 @@ a
           :margin-top 23px 
       span.right
         :height 78px
-        :width 30px
+        :width 15px
         :float left
         :background url(/images/sprite-1.png) no-repeat -45px -9px
+    .accounts-wrapper
+      :height 300px
+      :width 265px
+      :background url(/images/background-left.png) repeat 0 0
+      :float left
+      #search-contact-box
+        :height 25px
+        :width 252px
+        :margin-left 9px
+        span.left
+          :height 16px
+          :width 17px
+          :background url(/images/sprite-1.png) no-repeat -155px -2px
+          :float left
+          :margin-left 2px
+          :margin-top 4px
+        span.center 
+          input
+            :height 16px
+            :width 213px
+            :border 0
+            :border-top 1px solid #DDDDDD
+            :border-bottom 1px solid #DDDDDD
+            :float left
+            :margin-top 4px  
+        span.right
+          :height 16px
+          :width 17px
+          :background url(/images/sprite-1.png) no-repeat -177px -2px
+          :float left
+          :margin-top 4px
+      #my-account-box
+        :height 20px
+        :width 252px
+        :margin-left 9px
+        :background url(/images/background-buddy-section-header.png) repeat 0 0
+        ul
+          :height 20px
+          :width 150px
+          :float left
+          li
+            :height 16px
+            :width 17px
+            :float left
+            :display block
+            :margin-left 6px
+            a.account-icon.gtalk, a.account-icon.facebook, a.account-icon.msn
+              :height 16px
+              :width 17px
+              :float left
+              :margin-top 3px
+              :margin-left 2px
+            a.account-icon.gtalk
+              :background url(/images/sprite-1.png) no-repeat -192px -47px  
+            a.account-icon.facebook
+              :background url(/images/sprite-1.png) no-repeat -240px -45px  
+            a.account-icon.msn
+              :background url(/images/sprite-1.png) no-repeat -216px -45px  
+        a#add-contact 
+          :height 11px
+          :width 79px
+          :background url(/images/sprite-1.png) no-repeat -165px -63px
+          :float left
+          :margin-top 5px
+          :margin-left 6px     
