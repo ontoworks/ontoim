@@ -29,19 +29,20 @@
         a#add-contact(href:"#")  
           span.label add account
       #buddy-list-box
-        - each net in ['Chat', 'Gtalk', 'facebook']
-          .buddy-list-section
-            a.header(href:"#")
-              span.header-icon(class: net.toLowerCase())
-              span.header-label= net
-              span.header-expand
-            ul.buddy-list
-              - for (var i=0; i < 10; i++)
-                - bg = (i%2==0) ? 'even' : 'odd'
-                li.buddy-item(class: bg)
-                  span.status-icon.online
-                  .buddy-info
-                    p.name pumiprinsipis
-                    p.message el de las garritas
-                  span.network-icon
-                  img.buddy-photo(src:'/images/buddies/'+((i%2==0) ? 1 : 2)+'.jpg')
+        .sections-wrapper
+          - each net in ['Chat', 'Gtalk', 'facebook']
+            .buddy-list-selection
+              a.header(href:"#")
+                span.header-icon(class: net.toLowerCase())
+                span.header-label= net
+                span.header-expand
+              ul.buddy-list
+                - for (var i=0; i < 10; i++)
+                  - bg = (i%2==0) ? 'even' : 'odd'
+                  li.buddy-item(class: bg)
+                    span.status-icon.online
+                    .buddy-info
+                      p.name pumiprinsipis
+                      p.message el de las garritas
+                    span.network-icon
+                    img.buddy-photo(src:'/images/buddies/'+((i%2==0) ? 1 : 2)+'.jpg')
