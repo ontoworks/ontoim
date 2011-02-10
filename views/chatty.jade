@@ -18,13 +18,28 @@
         span.center
           input(type:'text')
         span.right
-      #my-account-box
+      #my-accounts-box
         ul
           li
-            a.account-icon.gtalk 
+            a.account-icon.gtalk(href:"#") 
           li
-            a.account-icon.facebook
+            a.account-icon.facebook(href:"#")
           li
-            a.account-icon.msn
-        a#add-contact  
+            a.account-icon.msn(href:"#")
+        a#add-contact(href:"#")  
           span.label add account
+      #buddy-list-box
+        .buddy-list-selection
+          a.header(href:"#")
+            span.header-icon
+            span.header-label Chat
+            span.header-expand
+          ul.buddy-list
+            li.buddy-item
+              span.status-icon.online
+              .buddy-info
+                p.name pumiprinsipis
+                p.message el de las garritas
+              span.network-icon
+              img.buddy-photo
+                img(src:'/images/1.jpg')
