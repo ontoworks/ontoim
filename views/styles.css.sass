@@ -65,7 +65,7 @@ a
         :float left
         :background url(/images/sprite-1.png) no-repeat -45px -9px
     .accounts-wrapper
-      :height 300px
+      :height 580px
       :width 265px
       :background url(/images/background-left.png) repeat 0 0
       :float left
@@ -133,24 +133,31 @@ a
             :padding-left 16px
             :padding-top 1px
       #buddy-list-box
-        :height 200px
+        :height 500px
         :width 252px
         :margin-left 9px
         .buddy-list-selection
-          :height 200px
+          :height 140px
           :width 252px
           a.header
             :height 20px
             :width 252px
             :background url(/images/background-buddy-section-header.png) repeat 0 0
             :float left
-            span.header-icon
-              :height 14px
+            :border-top 1px solid #CCCCCC
+            :border-bottom 1px solid #CCCCCC
+            span.header-icon.chat,span.header-icon.gtalk,span.header-icon.facebook
+              :height 16px
               :width 20px
-              :background url(/images/sprite-1.png) no-repeat -264px -43px
               :float left
               :margin-top 2px
               :margin-left 7px
+            span.header-icon.chat
+              :background url(/images/sprite-1.png) no-repeat -264px -43px
+            span.header-icon.gtalk
+              :background url(/images/sprite-1.png) no-repeat -191px -45px
+            span.header-icon.facebook
+              :background url(/images/sprite-1.png) no-repeat -239px -44px
             span.header-label
               :height 14px
               :width 200px
@@ -174,14 +181,16 @@ a
               :margin-top 7px
               :margin-left 3px
           ul.buddy-list
-            :height 200px
+            :height 120px
             :width 252px
-            :background-color blue
             :float left
+            li.buddy-item.odd
+              :background-color #FFFFFF
+            li.buddy-item.even
+              :background-color #EEEEEE
             li.buddy-item
               :height 30px
               :width 252px
-              :background-color #FFFFFF
               :display block
               span.status-icon.online
                 :height 10px
@@ -192,14 +201,17 @@ a
                 :margin-left 5px
               .buddy-info
                 :height 30px
-                :width 150px
+                :width 165px
                 :float left
                 :margin-left 10px
                 p.name
-                  :font-size 12px
-                  :margin-top 2px
-                p.message
                   :font-size 11px
+                  :margin-top 3px
+                p.name.alone
+                  :font-size 11px
+                  :margin-top 9px
+                p.message
+                  :font-size 10px
                   :color #AAAAAA
                   :margin-top 2px
               span.network-icon
@@ -209,9 +221,10 @@ a
                 :float left  
                 :margin-top 8px
               img.buddy-photo
-                :height 30px
-                :width 30px
+                :height 20px
+                :width 20px
                 :float left
-                :margin-left 10px    
+                :margin-left 15px
+                :margin-top 5px    
                   
                   
