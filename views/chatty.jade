@@ -31,7 +31,7 @@
       #buddy-list-box
         .sections-wrapper
           - each net in ['Chat', 'Gtalk', 'facebook']
-            .buddy-list-selection
+            .buddy-list-section
               a.header(href:"#")
                 span.header-icon(class: net.toLowerCase())
                 span.header-label= net
