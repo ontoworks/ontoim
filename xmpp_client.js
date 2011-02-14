@@ -1,6 +1,7 @@
 var sys = require('sys');
 var xmpp = require('node-xmpp');
 var jQuery= require('jquery');
+var EventEmitter = require('events').EventEmitter;
 
 var XmppClient= function() {
 };

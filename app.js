@@ -1,30 +1,12 @@
-var express = require('express');
-var sys   = require('sys'),
-    exec  = require('child_process').exec;
+var express = require('express'),
+    sys   = require('sys'),
+    io = require('./socket.io');
 
 var app = module.exports = express.createServer();
 app.set('view engine', 'jade');
 app.configure(function(){
     app.use(express.bodyDecoder());
 });
-
-// var sass = require('sass')
-
-function convert_sass(filename) {
-    var result;
-    var child = exec('sass '+filename, 
-		 function (error, stdout, stderr) {
-		     sys.print('stdout: ' + stdout);
-		     sys.print('stderr: ' + stderr);
-		     if (error !== null) {
-			 console.log('exec error: ' + error);
-			 result= "";
-		     }
-		     result= stdout;
-		 });
-    return result;
-}
-
 
 app.get('/*.css', function(req, res) {
     var url= req.url.split('/').reverse();
@@ -63,3 +45,24 @@ app.get('/chatty', function(req, res){
 });
 
 app.listen(8080);
+
+var io= io.listen(webapp);
+var _client;
+
+io.on('connection', function(client) {
+    var _client= client;
+    client.on('message', function(message){
+	var msg = { message: [client.sessionId, message] };
+	// buffer.push(msg);
+	// 
+	console.log(msg);
+	//
+	
+	if (buffer.length > 15) buffer.shift();
+	client.broadcast(msg);
+    });
+    
+    client.on('disconnect', function(){
+	client.broadcast({ announcement: client.sessionId + ' disconnected' });
+    });
+});
