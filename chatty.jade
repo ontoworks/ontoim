@@ -1,12 +1,3 @@
-#client
-  #connection-manager
-    .username
-      p.label Username:
-      input(type:'text')
-    .password
-      p.label Password:
-      input(type:'password')
-    a.connect-btn(href:"#") Connect
 #canvas
   #left
     .status-wrapper
@@ -40,15 +31,15 @@
       #buddy-list-box
         .sections-wrapper
           - each net in ['Chat', 'Gtalk', 'facebook']
-            .buddy-list-section(class: net.toLowerCase())
+            .buddy-list-section
               a.header(href:"#")
                 span.header-icon(class: net.toLowerCase())
                 span.header-label= net
                 span.header-expand
               ul.buddy-list
-                - for (var i=0; i < 1; i++)
+                - for (var i=0; i < 10; i++)
                   - bg = (i%2==0) ? 'even' : 'odd'
-                  li.buddy-item.layout(class: bg, style: "display:none;")
+                  li.buddy-item(class: bg)
                     span.status-icon.online
                     .buddy-info
                       p.name pumiprinsipis

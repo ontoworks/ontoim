@@ -1,6 +1,9 @@
 var express = require('express'),
     sys   = require('sys'),
-    io = require('socket.io');
+    io = require('socket.io'),
+    fs = require('fs'),
+    stylus= require('stylus'),
+    net = require('net');
 
 var app = module.exports = express.createServer();
 app.set('view engine', 'jade');
@@ -15,6 +18,13 @@ app.get('/*.css', function(req, res) {
 	var filename= res.req.params[0].split('/')[1];
 	// var css= convert_sass(__dirname+'/views/'+filename + '.css.sass');
 	res.render(filename + '.css.sass', { layout: false });
+    } else if (url[1] == 'styl') {
+	var filename= res.req.params[0].split('/')[1];
+	var str= fs.readFileSync(__dirname + '/views/'+filename+'.styl', 'utf8');
+	stylus.render(str, { filename: filename+'.styl' }, function(err, css){
+	    if (err) throw err;
+	    res.send(css);
+	});
     } else {
 	res.sendfile(__dirname+'/public/stylesheets/'+req.params[0]+'.css');
     }
@@ -44,25 +54,77 @@ app.get('/chatty', function(req, res){
     });
 });
 
+app.get('/client', function(req, res){
+    res.render('client.jade', {
+	locals: {
+	    title: "OntoIM"
+	}
+    });
+});
+
 app.listen(8080);
+
+// Adds session_id to a JSON string
+function add_session_id(message, session_id) {
+    var parse;
+    try {
+	parse= JSON.parse(message);
+    } catch(err) {
+	console.log(err);
+    }
+    if(parse) {
+	parse.sid= session_id;
+	message= JSON.stringify(parse);
+	return message;
+    }
+}
 
 var io= io.listen(app);
 var _client;
+var buffer= [];
+
+var sessions= {};
 
 io.on('connection', function(client) {
     var _client= client;
+    client.send({ buffer: buffer });
+
     client.on('message', function(message){
 	var msg = { message: [client.sessionId, message] };
-	// buffer.push(msg);
-	// 
-	console.log(msg);
-	//
-	
+	buffer.push(msg);
 	if (buffer.length > 15) buffer.shift();
-	client.broadcast(msg);
+	// client.broadcast(msg);
+	message= add_session_id(message, client.sessionId);
+	cm.write(message);
     });
     
     client.on('disconnect', function(){
 	client.broadcast({ announcement: client.sessionId + ' disconnected' });
     });
+});
+
+// Connect to XMPP Connection Manager
+var cm= net.createConnection(8124, 'localhost');
+cm.on('connect', function(stream) {
+    cm.setEncoding('utf8');
+    console.log("Connected to Connection Manager");
+});
+
+cm.on('data', function(stream) {
+    console.log("Data from CM");
+    var message;
+    try {
+	message= JSON.parse(stream);
+    } catch(err) {
+	console.log("Can't parse JSON");
+    }
+    if (message) {
+	if (message.session) {
+	    sessions[message.session.jid]= message.session.sid;
+	} else {
+	    io.clients[message.sid].send(JSON.stringify(message));
+	}
+    } else {
+	console.log(stream);
+    }
 });
