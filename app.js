@@ -1,6 +1,6 @@
 var express = require('express'),
     sys   = require('sys'),
-    io = require('./socket.io');
+    io = require('socket.io');
 
 var app = module.exports = express.createServer();
 app.set('view engine', 'jade');
@@ -46,7 +46,7 @@ app.get('/chatty', function(req, res){
 
 app.listen(8080);
 
-var io= io.listen(webapp);
+var io= io.listen(app);
 var _client;
 
 io.on('connection', function(client) {
