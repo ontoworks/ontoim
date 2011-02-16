@@ -23,6 +23,7 @@ $.widget('ui.buddy_list', {
 	    var buddy_jid= roster.roster.blist[i];
 	    buddy_item.addClass((function(parity) { return (parity%2==0) ? 'even' : 'odd'})(i));
 	    buddy_item.find(".name").text(roster.roster.contacts[buddy_jid].name);
+	    buddy_item.find(".name").trunc(25);
 	    $el.find(".buddy-list-section."+service+" .buddy-list").append(buddy_item.show());
 	}
     }

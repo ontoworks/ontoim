@@ -91,7 +91,6 @@ var ConnectionManager= function() {
 			} else if(stanza.is('iq')) {
 			    stanza_type= "iq";
 			    var str_stanza= stanza.toString();
-			    console.log(str_stanza);
 			    var jQ_stanza= jQuery(str_stanza);
 
 			    // Roster coming
