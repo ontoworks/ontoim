@@ -20,8 +20,9 @@ $.widget('ui.buddy_list', {
 	buddy_item_layout.removeClass("layout even odd");
 	for (var i=0; i<roster.roster.blist.length; i++) {
 	    var buddy_item= buddy_item_layout.clone();
+	    var buddy_jid= roster.roster.blist[i];
 	    buddy_item.addClass((function(parity) { return (parity%2==0) ? 'even' : 'odd'})(i));
-	    buddy_item.find(".name").text(roster.roster.blist[i]);
+	    buddy_item.find(".name").text(roster.roster.contacts[buddy_jid].name);
 	    $el.find(".buddy-list-section."+service+" .buddy-list").append(buddy_item.show());
 	}
     }

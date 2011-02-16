@@ -2,6 +2,7 @@ var sys = require('sys');
 var xmpp = require('node-xmpp');
 var net = require('net');
 var jQuery= require('jquery');
+var htmlparser= require('htmlparser');
 var EventEmitter = require('events').EventEmitter;
 
 function removeNL(s){
@@ -63,8 +64,8 @@ var ConnectionManager= function() {
 			// send presence
 			session.send(new xmpp.Element('presence'));
 			// request for roster
-			var iq_roster= new xmpp.Element('iq', {type: 'get'});
-			var query_roster= new xmpp.Element('query', {xmlns:'jabber:iq:roster'});
+			var iq_roster= new xmpp.Element('iq', {type: 'get', id:'google-roster-1'});
+			var query_roster= new xmpp.Element('query', {xmlns:'jabber:iq:roster', "xmlns:gr":'google:roster', "gr:ext":'2'});
 			iq_roster.cnode(query_roster);
 			session.send(iq_roster);
 
@@ -90,16 +91,27 @@ var ConnectionManager= function() {
 			} else if(stanza.is('iq')) {
 			    stanza_type= "iq";
 			    var str_stanza= stanza.toString();
+			    console.log(str_stanza);
 			    var jQ_stanza= jQuery(str_stanza);
 
 			    // Roster coming
 			    var jQ_roster= jQ_stanza.find("query[xmlns='jabber:iq:roster']");
 			    if (jQ_roster.length > 0) {
-				var jQ_roster_items= jQ_stanza.find('item');
+				var jQ_roster_items= jQ_stanza.find("item[subscription!=none]");
+				// jQuery fails for attributes with colons gr:t
 				var roster= {roster: {to: to, blist:[], contacts: {}}, sid: sid, service: 'gtalk'};
 				jQ_roster_items.each(function() {
+				    if(jQuery(this).attr('gr:t') == 'B') {
+					return true;
+				    }
 				    roster.roster.blist.push(jQuery(this).attr('jid'));
 				    roster.roster.contacts[jQuery(this).attr('jid')]= {};
+
+				    if (this.attributes.getNamedItem('name')) {
+					roster.roster.contacts[jQuery(this).attr('jid')]['name']= this.attributes.getNamedItem('name').value;
+				    } else {
+					roster.roster.contacts[jQuery(this).attr('jid')]['name']= jQuery(this).attr('jid');
+				    }
 				});
 				roster.roster.blist.sort();
 				stream.write(JSON.stringify(roster));
