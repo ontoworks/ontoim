@@ -3,7 +3,7 @@
     .status-wrapper
       span.left
       #status-box
-        .status-icon
+        .status-icon.busy
         .my-info
           p.name la cuturubrita loca
           p.message pam pararam
@@ -40,7 +40,7 @@
                 - for (var i=0; i < 10; i++)
                   - bg = (i%2==0) ? 'even' : 'odd'
                   li.buddy-item(class: bg)
-                    span.status-icon.online
+                    span.status-icon.busy
                     .buddy-info
                       p.name pumiprinsipis
                       p.message el de las garritas
@@ -61,8 +61,45 @@
         .span-right
         .chat-buffer-wrapper
           .chat-buffer 
-            .message
+            .message.odd
               img.thumb(src:'/images/buddies/1.jpg') 
               .message-background
                 p.single ya mandé un mensaje desde Node (JS) a MSN
                 p.time 12:34
+            .message.even
+              img.thumb(src:'/images/buddies/8.jpg') 
+              .message-background
+                p.single ya mandé un mensaje desde Node (JS) a MSN
+                p.time 12:34
+            .message.odd
+              img.thumb(src:'/images/buddies/1.jpg') 
+              .multi.message-background
+                .multi-item
+                  p.single pero es que me empelicule mas de la cuenta
+                  p.time 12:36
+                .multi-item
+                  p.single pero es que me empeliculé más de la cuenta pero es que me empeliculé más de la cuenta pero es que me empeliculé más de la cuenta
+                  p.time 12:36 
+                .multi-item
+                  p.single estamos listos mi cuturubrita loca ahora si vamos a tomarnos el mundo
+                  p.time 12:36
+            .message.even
+              img.thumb(src:'/images/buddies/8.jpg') 
+              .multi.message-background
+                .multi-item
+                  p.single pero es que me empelicule mas de la cuenta
+                  p.time 12:36
+                .multi-item
+                  p.single pero es que me empeliculé más de la cuenta pero es que me empeliculé más de la cuenta pero es que me empeliculé más de la cuenta
+                  p.time 12:36 
+                .multi-item
+                  p.single estamos listos mi cuturubrita loca ahora si vamos a tomarnos el mundo
+                  p.time 12:36
+          .send-message
+            p.label typing...
+            input(type:'text')
+ 
+                  
+
+
+
