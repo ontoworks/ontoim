@@ -45,15 +45,22 @@
                 span.header-icon(class: net.toLowerCase())
                 span.header-label= net
                 span.header-expand
-              ul.buddy-list
-                - for (var i=0; i < 1; i++)
-                  - bg = (i%2==0) ? 'even' : 'odd'
-                  li.buddy-item.layout(class: bg, style: "display:none;")
-                    span.status-icon.online
-                    .buddy-info
-                      p.name pumiprinsipis
-                      p.message el de las garritas
-                    img.buddy-photo(src:'/images/buddies/'+((i%2==0) ? 1 : 2)+'.jpg')
+              ul.buddy-list.online
+                li.buddy-item.online.layout(style: "display:none;")
+                  span.status-icon.online
+                  .buddy-info
+                    p.name pumiprinsipis
+                    p.message el de las garritas
+                  img.buddy-photo(src:'/images/buddies/2.jpg')
+              ul.buddy-list.away
+              ul.buddy-list.idle
+              ul.buddy-list.offline
+                li.buddy-item.offline.layout
+                  span.status-icon
+                  .buddy-info
+                    p.name pumiprinsipis
+                    p.message
+                  img.buddy-photo(src:'/images/buddies/1.jpg')
       .accounts-footer
   #right
     #chat-sessions

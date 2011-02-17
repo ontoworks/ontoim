@@ -61,8 +61,6 @@ var ConnectionManager= function() {
 			console.log('online');
 			self.add_session(jid, session);
 
-			// send presence
-			session.send(new xmpp.Element('presence'));
 			// request for roster
 			var iq_roster= new xmpp.Element('iq', {type: 'get', id:'google-roster-1'});
 			var query_roster= new xmpp.Element('query', {xmlns:'jabber:iq:roster', "xmlns:gr":'google:roster', "gr:ext":'2'});
@@ -74,6 +72,9 @@ var ConnectionManager= function() {
 		    });
 		    
 		    session.on('stanza', function(stanza) {
+			var str_stanza= stanza.toString();
+			var jQ_stanza= jQuery(str_stanza);
+
 			var stanza_type;
 			var to= stanza.attrs.to;
 			if (stanza.is('message') &&
@@ -87,11 +88,10 @@ var ConnectionManager= function() {
 			    session.send(stanza);
 			} else if(stanza.is('presence')) {
 			    stanza_type= "presence";
-			    // console.log(stanza.toString());
+			    var presence= {presence:{from:jQ_stanza.attr('from'), message:jQ_stanza.find('status').text()}, sid: sid, service: 'gtalk'};
+			    stream.write(JSON.stringify(presence));
 			} else if(stanza.is('iq')) {
 			    stanza_type= "iq";
-			    var str_stanza= stanza.toString();
-			    var jQ_stanza= jQuery(str_stanza);
 
 			    // Roster coming
 			    var jQ_roster= jQ_stanza.find("query[xmlns='jabber:iq:roster']");
@@ -114,6 +114,8 @@ var ConnectionManager= function() {
 				});
 				roster.roster.blist.sort();
 				stream.write(JSON.stringify(roster));
+				// send presence only after roster has been received
+				session.send(new xmpp.Element('presence'));
 			    }
 			} else {
 			    stream.write(stanza.toString());

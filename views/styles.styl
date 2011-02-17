@@ -27,5 +27,10 @@
 #canvas 
   #left .accounts-wrapper #buddy-list-box .buddy-list-section ul.buddy-list li.buddy-item .buddy-info
     width: auto
-  #buddy-list-box .buddy-item .name
-    width: 185px
+  #buddy-list-box .buddy-item
+    .name
+      width: 185px
+    &.offline
+      opacity: 0.5
+      .name
+        margin-top: 10px !important

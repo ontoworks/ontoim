@@ -112,18 +112,29 @@ cm.on('connect', function(stream) {
 
 cm.on('data', function(stream) {
     console.log("Data from CM");
-    var message;
+    var messages= [];
     try {
-	message= JSON.parse(stream);
+	// presence messages sometimes have more than one
+	// JSON literal after another
+	var presence_buffer= stream.split("{\"presence\":");
+	if (presence_buffer.length > 1) {
+	    for(var i=1; i < presence_buffer.length; i++) {
+		messages.push(JSON.parse("{\"presence\":"+presence_buffer[i]));
+	    }
+	} else {
+	    messages.push(JSON.parse(stream));
+	}
     } catch(err) {
 	console.log("Can't parse JSON");
     }
-    if (message) {
-	if (message.session) {
-	    sessions[message.session.jid]= message.session.sid;
-	} else {
-	    io.clients[message.sid].send(JSON.stringify(message));
-	}
+    if (messages) {
+	messages.forEach(function(message) {
+	    if (message.session) {
+		sessions[message.session.jid]= message.session.sid;
+	    } else {
+		io.clients[message.sid].send(JSON.stringify(message));
+	    }
+	});
     } else {
 	console.log(stream);
     }
